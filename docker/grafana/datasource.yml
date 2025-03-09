@@ -1,0 +1,104 @@
+# Grafana پیکربندی منابع داده برای داشبورد
+apiVersion: 1
+
+# تنظیمات پیش‌فرض برای همه datasourceها
+deleteDatasources:
+  - name: Prometheus
+    orgId: 1
+
+datasources:
+  # Prometheus برای مانیتورینگ سیستم
+  - name: Prometheus
+    type: prometheus
+    access: proxy
+    orgId: 1
+    url: http://prometheus:9090
+    basicAuth: false
+    isDefault: true
+    version: 1
+    editable: true
+    jsonData:
+      httpMethod: POST
+      timeInterval: "5s"
+      queryTimeout: "30s"
+      exemplarTraceIdDestinations:
+        - name: trace_id
+          datasourceUid: tempo
+
+  # Loki برای جمع‌آوری و مدیریت لاگ‌ها
+  - name: Loki
+    type: loki
+    access: proxy
+    orgId: 1
+    url: http://loki:3100
+    basicAuth: false
+    isDefault: false
+    version: 1
+    editable: true
+    jsonData:
+      maxLines: 1000
+      derivedFields:
+        - name: "trace_id"
+          matcherRegex: "trace_id=(\\w+)"
+          url: "${__value.raw}"
+          datasourceUid: tempo
+
+  # PostgreSQL برای مانیتورینگ دیتابیس
+  - name: PostgreSQL
+    type: postgres
+    url: postgres:5432
+    user: ${POSTGRES_USER}
+    secureJsonData:
+      password: ${POSTGRES_PASSWORD}
+    jsonData:
+      database: ${POSTGRES_DB}
+      sslmode: "disable"
+      maxOpenConns: 100
+      maxIdleConns: 100
+      connMaxLifetime: 14400
+      postgresVersion: 1500
+      timescaledb: false
+
+  # Redis برای مانیتورینگ کش
+  - name: Redis
+    type: redis-datasource
+    access: proxy
+    orgId: 1
+    url: redis://redis:6379
+    basicAuth: false
+    isDefault: false
+    version: 1
+    editable: true
+    jsonData:
+      client: standalone
+      timeout: 10
+      acl: false
+      
+  # Tempo برای ردیابی درخواست‌ها
+  - name: Tempo
+    type: tempo
+    access: proxy
+    orgId: 1
+    url: http://tempo:3200
+    basicAuth: false
+    isDefault: false
+    version: 1
+    editable: true
+    apiVersion: 1
+    jsonData:
+      httpMethod: GET
+      serviceMap:
+        datasourceUid: prometheus
+
+# تنظیمات امنیتی و محدودیت‌ها
+security:
+  enabled: true
+  adminUser: admin
+  adminPassword: ${GRAFANA_ADMIN_PASSWORD}
+
+# تنظیمات نگهداری داده‌ها
+retention:
+  sonarQube: 30d   # نگهداری داده‌های کیفیت کد
+  prometheus: 15d   # نگهداری متریک‌های سیستم
+  loki: 7d         # نگهداری لاگ‌ها
+  tempo: 3d        # نگهداری داده‌های ردیابی
