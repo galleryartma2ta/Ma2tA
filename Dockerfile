@@ -1,4 +1,4 @@
-FROM registry.docker.ir/alpine:3.18
+FROM registry.docker.ir/alpine:3.21
 
 # تنظیم متغیرهای محیطی
 ENV GOPATH=/go \
