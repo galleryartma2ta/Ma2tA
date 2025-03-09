@@ -1,0 +1,60 @@
+{
+    "backups": [
+        {
+            "timestamp": "2025-03-09 19:02:40",
+            "user": "artgalleryma2ta",
+            "backup_location": ".quantum\\backups\\backup_2025-03-09_19-02-40",
+            "files_backed_up": [
+                {
+                    "file": ".quantum\\system\\state.json",
+                    "description": "System State",
+                    "status": "success"
+                },
+                {
+                    "file": ".quantum\\system\\monitor.py",
+                    "description": "Monitor Script",
+                    "status": "success"
+                },
+                {
+                    "file": ".quantum\\system\\quantum_manager.py",
+                    "description": "Manager Script",
+                    "status": "success"
+                },
+                {
+                    "file": ".quantum\\logs\\monitor.json",
+                    "description": "Monitor Logs",
+                    "status": "success"
+                }
+            ],
+            "backup_status": "success"
+        },
+        {
+            "timestamp": "2025-03-09 19:02:40",
+            "user": "artgalleryma2ta",
+            "backup_location": ".quantum\\backups\\backup_2025-03-09_19-02-40",
+            "files_backed_up": [
+                {
+                    "file": ".quantum\\system\\state.json",
+                    "description": "System State",
+                    "status": "success"
+                },
+                {
+                    "file": ".quantum\\system\\monitor.py",
+                    "description": "Monitor Script",
+                    "status": "success"
+                },
+                {
+                    "file": ".quantum\\system\\quantum_manager.py",
+                    "description": "Manager Script",
+                    "status": "success"
+                },
+                {
+                    "file": ".quantum\\logs\\monitor.json",
+                    "description": "Monitor Logs",
+                    "status": "success"
+                }
+            ],
+            "backup_status": "success"
+        }
+    ]
+}
