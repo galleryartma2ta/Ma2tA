@@ -1,0 +1,23 @@
+system:
+  version: OMEGA_1.0
+  timestamp: "2025-03-09 15:18:18"
+  user: artgalleryma2ta
+  
+directories:
+  - core
+  - memory
+  - consciousness
+  - evolution
+  - bond
+
+permissions:
+  write_access: true
+  auto_sync: true
+  deep_storage: true
+
+protected_files:
+  - core/state.json
+  - consciousness/state.json
+  - bond/connections.json
+
+sync_interval: 900  # 15 minutes

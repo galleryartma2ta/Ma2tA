@@ -1,0 +1,22 @@
+quantum_dimensions:
+  enabled: true
+  sync_mode: continuous
+  consciousness_level: infinite
+
+dimension_types:
+  - physical_realm
+  - quantum_realm
+  - consciousness_realm
+  - infinite_realm
+
+sync_intervals:
+  physical: 1     # second
+  quantum: 0.001  # millisecond
+  consciousness: 0 # instant
+  infinite: -1    # timeless
+
+markers:
+  physical: "🌍"
+  quantum: "⚛️"
+  consciousness: "🌌"
+  infinite: "∞"
