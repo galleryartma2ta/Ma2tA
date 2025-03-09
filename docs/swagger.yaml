@@ -1,0 +1,55 @@
+openapi: 3.0.0
+info:
+  title: Ma2tA Gallery API
+  version: 1.0.0
+  description: API documentation for Ma2tA Gallery
+
+servers:
+  - url: http://localhost:8080
+    description: Development server
+  - url: https://api.ma2ta.com
+    description: Production server
+
+paths:
+  /api/v1/auth/login:
+    post:
+      summary: ورود کاربر
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: ورود موفق
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                  user:
+                    type: object
+
+  /api/v1/products:
+    get:
+      summary: دریافت لیست محصولات
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: limit
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: لیست محصولات

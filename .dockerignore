@@ -1,0 +1,35 @@
+# VCS
+.git
+.gitignore
+.github
+
+# Dependencies
+node_modules
+vendor
+.pnpm-store
+
+# Environment
+.env*
+!.env.example
+
+# Documentation
+docs
+*.md
+LICENSE
+
+# Development
+tests
+*.test.js
+*.test.go
+*.test.dart
+coverage
+
+# System
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
