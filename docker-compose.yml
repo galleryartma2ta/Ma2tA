@@ -1,0 +1,93 @@
+version: '3.8'
+
+services:
+  dev:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: ma2ta-dev
+    volumes:
+      - .:/app
+      - go-modules:/go/pkg/mod
+      - node-modules:/app/frontend/node_modules
+      - art-uploads:/app/uploads
+    ports:
+      - "8080:8080"  # برای API
+      - "3000:3000"  # برای وب‌سایت
+    environment:
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=ma2ta_gallery
+      - POSTGRES_USER=ma2ta
+      - POSTGRES_PASSWORD=13271327
+      - REDIS_URL=redis://redis:6379
+      - NODE_ENV=development
+      - GO111MODULE=on
+      - TZ=Asia/Tehran
+    networks:
+      - ma2ta-network
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+    tty: true
+    stdin_open: true
+
+  postgres:
+    image: registry.docker.ir/postgres:15-alpine
+    container_name: ma2ta-postgres
+    environment:
+      - POSTGRES_DB=ma2ta_gallery
+      - POSTGRES_USER=ma2ta
+      - POSTGRES_PASSWORD=13271327
+      - TZ=Asia/Tehran
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./init-db:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ma2ta -d ma2ta_gallery"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - ma2ta-network
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+
+  redis:
+    image: registry.docker.ir/redis:alpine
+    container_name: ma2ta-redis
+    command: redis-server --appendonly yes
+    volumes:
+      - redis-data:/data
+    networks:
+      - ma2ta-network
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: ma2ta-pgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@ma2ta.com
+      - PGADMIN_DEFAULT_PASSWORD=Ma2taAdmin123!
+    ports:
+      - "5050:80"
+    networks:
+      - ma2ta-network
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
+networks:
+  ma2ta-network:
+    driver: bridge
+
+volumes:
+  go-modules:
+  node-modules:
+  postgres-data:
+  redis-data:
+  art-uploads:

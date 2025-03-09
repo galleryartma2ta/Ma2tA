@@ -1,6 +1,3 @@
-**فایل `README.md` نهایی برای پروژه `Ma2tA`:**
-
-```markdown
 # 🛍 Ma2tA - سیستم فروشگاهی آنلاین  
 
 ![Ma2tA](https://via.placeholder.com/1920x400/007bff/fff?text=Ma2tA+Online+Shop)
@@ -27,16 +24,19 @@
 ## 🏗 معماری پروژه
 ```bash
 ├── 📁 .github/                # تنظیمات GitHub (CI/CD، Issue Templates)
-├── 📁 backend/               # سرویس بک‌اند (Go + Gin + SQLite/PostgreSQL)
+├── 📁 backend/               # سرویس بک‌اند (Go + Gin + PostgreSQL)
 ├── 📁 frontend/              # وب اپلیکیشن (SvelteKit + Tailwind)
 ├── 📁 mobile/                # اپ موبایل (Flutter)
 ├── 📁 docker/                # کانفیگ‌های Docker و Nginx
 ├── 📁 scripts/               # اسکریپت‌های نصب، دپلوی و دیباگ
 ├── 📁 docs/                  # مستندات فنی و معماری
-├── .gitignore                # فایل Gitignore
-├── README.md                 # این فایل
-├── LICENSE                   # مجوز MIT
-└── Makefile                  # اتوماتیک‌سازی فرآیندها
+├── 📁 uploads/               # محل ذخیره فایل‌های آپلود شده
+├── 📁 i18n/                  # فایل‌های چندزبانه
+├── .gitignore               # فایل Gitignore
+├── README.md                # این فایل
+├── docker-compose.yml       # تنظیمات Docker Compose
+├── LICENSE                  # مجوز MIT
+└── Makefile                 # اتوماتیک‌سازی فرآیندها
 ```
 
 ---
@@ -45,7 +45,8 @@
 ### بک‌اند
 - **زبان:** Go 1.21+
 - **فریمورک:** Gin
-- **دیتابیس:** SQLite (توسعه) / PostgreSQL (تولید)
+- **دیتابیس:** PostgreSQL
+- **کش:** Redis
 - **پرداخت:** زرین‌پال
 - **امنیت:** JWT, Rate Limiting, CORS
 
@@ -81,7 +82,7 @@
 
 ### ۱. کلون پروژه
 ```bash
-git clone https://github.com/yourusername/Ma2tA.git
+git clone https://github.com/galleryartma2ta/Ma2tA.git
 cd Ma2tA
 ```
 
@@ -90,99 +91,112 @@ cd Ma2tA
 docker-compose up -d --build
 ```
 
-### ۳. نصب وابستگی‌ها
+### ۳. دسترسی به کانتینر توسعه
 ```bash
-# بک‌اند
-cd backend && go mod tidy
+docker exec -it ma2ta-dev bash
+```
 
-# فرانت‌اند
-cd frontend && npm install
+### ۴. تنظیمات اولیه دیتابیس
+رمز عبور پیش‌فرض برای PostgreSQL: `13271327`
 
-# موبایل
-cd mobile && flutter pub get
+برای اتصال به دیتابیس:
+```bash
+psql -U ma2ta -d ma2ta_gallery
 ```
 
 ---
 
 ## ⚙️ پیکربندی
 
-### بک‌اند (فایل `.env`)
-```env
-GIN_MODE=debug
-DB_PATH=/data/ma2ta.db
-ZARINPAL_MERCHANT_ID=your_merchant_id
-REDIS_URL=redis://redis:6379
+### متغیرهای محیطی (در docker-compose.yml)
+```yaml
+environment:
+  - POSTGRES_HOST=postgres
+  - POSTGRES_PORT=5432
+  - POSTGRES_DB=ma2ta_gallery
+  - POSTGRES_USER=ma2ta
+  - POSTGRES_PASSWORD=13271327
+  - REDIS_URL=redis://redis:6379
+  - NODE_ENV=development
 ```
 
-### فرانت‌اند (فایل `.env`)
-```env
-VITE_API_URL=http://localhost:8080/api
-VITE_DEFAULT_LANG=fa
-```
-
-### موبایل (فایل `lib/config.dart`)
-```dart
-const String kApiUrl = "http://10.0.2.2:8080/api";
-const String kZarinpalCallback = "zarinpal://ma2ta-verify";
-```
+### پورت‌های پیش‌فرض
+- **API:** `8080`
+- **وب‌سایت:** `3000`
+- **دیتابیس:** `5432`
+- **Redis:** `6379`
+- **PgAdmin:** `5050`
 
 ---
 
-## 🚀 اجرا
+## 🚀 اجرای سرویس‌ها
 
-### ۱. اجرای بک‌اند
+### مدیریت کانتینرها
 ```bash
-make backend-run
+# اجرای همه سرویس‌ها
+docker-compose up -d
+
+# متوقف کردن سرویس‌ها
+docker-compose down
+
+# مشاهده لاگ‌ها
+docker-compose logs -f
 ```
 
-### ۲. اجرای فرانت‌اند
-```bash
-make frontend-run
-```
-
-### ۳. اجرای موبایل
-```bash
-make mobile-run
-```
+### دسترسی به سرویس‌ها
+- **وب‌سایت:** http://localhost:3000
+- **API:** http://localhost:8080
+- **PgAdmin:** http://localhost:5050
+  - ایمیل: `admin@ma2ta.com`
+  - رمز: `Ma2taAdmin123!`
 
 ---
 
-## 📡 مستندات API (Swagger)
-- پس از اجرای بک‌اند، مستندات Swagger در آدرس زیر قابل دسترسی است:  
-  `http://localhost:8080/swagger/index.html`
+## 📡 مستندات API
+- Swagger UI: http://localhost:8080/swagger/index.html
+- ReDoc: http://localhost:8080/docs
 
 ---
 
 ## 💳 پرداخت زرین‌پال
-- **مراحل یکپارچه‌سازی:**
-  1. ثبت‌نام در [پنل زرین‌پال](https://next.zarinpal.com).
-  2. تنظیم `Merchant ID` در فایل `.env`.
-  3. فعال‌سازی وب‌هوک برای تایید پرداخت در `handlers/payment.go`.
+- مستندات یکپارچه‌سازی در `docs/payment-integration.md`
+- تنظیمات درگاه در `backend/config/payment.go`
+- نمونه کد پرداخت در `docs/examples/payment`
 
 ---
 
 ## 🤝 مشارکت
-1. پروژه را Fork کنید.
-2. Branch جدید ایجاد کنید:  
-   ```bash
-   git checkout -b feature/your-feature
-   ```
-3. تغییرات را Commit کنید:  
-   ```bash
-   git commit -m "feat: افزودن قابلیت جدید"
-   ```
-4. تغییرات را Push کرده و Pull Request باز کنید.
+1. پروژه را Fork کنید
+2. Branch جدید بسازید (`git checkout -b feature/amazing-feature`)
+3. تغییرات را Commit کنید (`git commit -m 'feat: Add amazing feature'`)
+4. Branch را Push کنید (`git push origin feature/amazing-feature`)
+5. Pull Request ایجاد کنید
 
 ---
 
 ## 🚨 خطاهای رایج
-### خطای CORS
-- مطمئن شوید میدلور CORS در بک‌اند فعال است. ([مثال](#خطای-cors-در-go)).
+
+### مشکل دسترسی به volume‌های Docker
+```bash
+sudo chown -R $USER:$USER uploads/
+sudo chmod -R 777 uploads/
+```
 
 ### خطای اتصال به دیتابیس
+1. اطمینان از اجرای PostgreSQL:
 ```bash
-# دسترسی به دیتابیس در اوبونتو
-sudo chmod 777 -R ./data
+docker-compose ps
+```
+2. تست اتصال:
+```bash
+docker exec -it ma2ta-postgres pg_isready -U ma2ta
+```
+
+### مشکل CORS
+در `backend/middleware/cors.go`:
+```go
+config := cors.DefaultConfig()
+config.AllowOrigins = []string{"http://localhost:3000"}
 ```
 
 ---
@@ -191,28 +205,5 @@ sudo chmod 777 -R ./data
 این پروژه تحت مجوز [MIT](LICENSE) منتشر شده است.
 
 ---
+
 **📧 پشتیبانی:** [support@ma2ta.com](mailto:support@ma2ta.com) | **🌐 وبسایت:** [https://ma2ta.com](https://ma2ta.com)
-```
-
----
-
-### تغییرات کلیدی نسبت به نسخه قبلی:
-1. **بهبود ساختار دایرکتوری‌ها:**  
-   - اضافه شدن پوشه `i18n` برای مدیریت چندزبانه.  
-   - تفکیک بهتر تست‌های واحد و یکپارچه‌سازی.
-
-2. **امنیت پیشرفته:**  
-   - پیاده‌سازی Rate Limiting و Redis برای کشینگ.  
-   - افزودن `SECURITY.md` برای مدیریت آسیب‌پذیری‌ها.
-
-3. **اتوماتیک‌سازی:**  
-   - اسکریپت‌های `Makefile` برای اجرای آسان دستورات.  
-   - پیکربندی CI/CD با GitHub Actions.
-
-4. **مستندات:**  
-   - اضافه شدن `CONTRIBUTING.md` برای مشارکت‌کنندگان.  
-   - مثال‌های کد برای تست‌های End-to-End.
-
----
-
-اگر نیاز به تغییرات بیشتری دارید، خوشحال میشم کمک کنم! 😊🚀
