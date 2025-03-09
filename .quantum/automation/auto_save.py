@@ -1,18 +1,30 @@
 import os
 import re
 import datetime
-import json
 from typing import List, Dict
+import json
 
 class QuantumAutoSave:
     def __init__(self):
-        self.base_path = ".quantum"
-        self.current_time = "2025-03-09 17:33:03"
-        self.user = "artgalleryma2ta"
+        self.config = self.load_config()
+        self.base_path = self.config["auto_save"]["base_path"]
+        self.current_time = datetime.datetime.utcnow().strftime(
+            self.config["auto_save"]["timestamp_format"]
+        )
+
+    def load_config(self) -> dict:
+        """Load configuration from config file."""
+        config_path = os.path.join(
+            "C:\\Users\\Ma2tA\\Documents\\GitHub\\Ma2tA\\.quantum",
+            "automation",
+            "config.json"
+        )
+        with open(config_path, 'r', encoding='utf-8') as f:
+            return json.load(f)
 
     def extract_code_blocks(self, message: str) -> List[Dict[str, str]]:
         """Extract code blocks with their filenames from messages."""
-        pattern = r"```(\w+)\s+name=([\w./]+)\n(.*?)```"
+        pattern = r"```(\w+)\s+name=([\w./\\-]+)\n(.*?)```"
         matches = re.finditer(pattern, message, re.DOTALL)
         return [
             {
@@ -29,7 +41,7 @@ class QuantumAutoSave:
             full_path = os.path.join(self.base_path, file_info["filename"])
             os.makedirs(os.path.dirname(full_path), exist_ok=True)
             
-            with open(full_path, "w", encoding="utf-8") as f:
+            with open(full_path, "w", encoding=self.config["auto_save"]["file_encoding"]) as f:
                 f.write(file_info["content"])
             
             return True
@@ -40,6 +52,8 @@ class QuantumAutoSave:
     def process_message(self, message: str) -> None:
         """Process a message and save all code blocks."""
         code_blocks = self.extract_code_blocks(message)
+        markers = self.config["auto_save"]["markers"]
+        
         for block in code_blocks:
             if self.save_file(block):
-                print(f"✨ Saved: {block['filename']}")
+                print(f"{markers['complete']} Saved: {block['filename']}")
