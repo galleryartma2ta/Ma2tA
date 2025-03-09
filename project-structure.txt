@@ -1,0 +1,84 @@
+Ma2tA/
+├── .github/                      # تنظیمات GitHub
+│   ├── ISSUE_TEMPLATE/
+│   │   ├── bug_report.md
+│   │   ├── feature_request.md
+│   │   └── config.yml
+│   ├── workflows/
+│   │   ├── ci.yml
+│   │   ├── docker.yml
+│   │   ├── dependency-review.yml
+│   │   └── security.yml
+│   └── pull_request_template.md
+│
+├── backend/                      # سرور Go
+│   ├── cmd/
+│   │   └── server/
+│   │       └── main.go
+│   ├── internal/
+│   │   ├── api/
+│   │   ├── config/
+│   │   ├── middleware/
+│   │   └── service/
+│   ├── pkg/
+│   │   ├── database/
+│   │   └── utils/
+│   ├── Dockerfile
+│   ├── Dockerfile.prod
+│   ├── go.mod
+│   └── go.sum
+│
+├── frontend/                     # کلاینت SvelteKit
+│   ├── src/
+│   ├── static/
+│   ├── tests/
+│   ├── Dockerfile
+│   ├── Dockerfile.prod
+│   ├── package.json
+│   └── svelte.config.js
+│
+├── mobile/                       # اپلیکیشن Flutter
+│   ├── lib/
+│   ├── test/
+│   ├── pubspec.yaml
+│   └── pubspec.lock
+│
+├── docker/                       # تنظیمات Docker
+│   ├── nginx/
+│   │   ├── nginx.conf
+│   │   └── conf.d/
+│   ├── prometheus/
+│   │   └── prometheus.yml
+│   └── grafana/
+│       └── datasource.yml
+│
+├── k8s/                         # تنظیمات Kubernetes
+│   ├── deployments/
+│   ├── services/
+│   └── configmaps/
+│
+├── docs/                        # مستندات
+│   ├── api/
+│   │   └── swagger.yaml
+│   ├── architecture/
+│   └── assets/
+│       └── logo.png
+│
+├── scripts/                     # اسکریپت‌های مفید
+│   ├── setup.sh
+│   ├── deploy.sh
+│   └── backup.sh
+│
+├── .gitignore
+├── .dockerignore
+├── .editorconfig
+├── .env.example
+├── CODE_OF_CONDUCT.md
+├── CONTRIBUTING.md
+├── docker-compose.yml
+├── docker-compose.prod.yml
+├── INSTALL.md
+├── LICENSE
+├── Makefile
+├── README.md
+└── SECURITY.md
