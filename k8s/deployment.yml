@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ma2ta
+  namespace: production
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ma2ta
+  template:
+    metadata:
+      labels:
+        app: ma2ta
+    spec:
+      containers:
+        - name: backend
+          image: ma2ta/backend:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: ma2ta-config
+                  key: DB_HOST
+          resources:
+            limits:
+              cpu: "1"
+              memory: "1Gi"
+            requests:
+              cpu: "500m"
+              memory: "512Mi"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10

@@ -1,0 +1,32 @@
+# Build Stage - Backend
+FROM golang:1.21-alpine AS backend-builder
+WORKDIR /app
+COPY backend/ .
+RUN go mod download
+RUN CGO_ENABLED=0 GOOS=linux go build -o server
+
+# Build Stage - Frontend
+FROM node:18-alpine AS frontend-builder
+WORKDIR /app
+COPY frontend/ .
+RUN npm ci
+RUN npm run build
+
+# Final Stage
+FROM alpine:3.18
+WORKDIR /app
+
+# Copy builds
+COPY --from=backend-builder /app/server .
+COPY --from=frontend-builder /app/dist ./public
+
+# Runtime dependencies
+RUN apk add --no-cache ca-certificates tzdata
+
+# Configuration
+ENV PORT=8080
+ENV GIN_MODE=release
+EXPOSE 8080
+
+# Run
+CMD ["./server"]
