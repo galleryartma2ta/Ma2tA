@@ -1,0 +1,30 @@
+{
+    "system": {
+        "timestamp": "2025-03-10 08:19:50",
+        "user": "artgalleryma2ta",
+        "update_interval": 300
+    },
+    "memory": {
+        "warning_threshold": 65.0,
+        "critical_threshold": 80.0,
+        "normal_range": {
+            "min": 40.0,
+            "max": 55.0
+        }
+    },
+    "network": {
+        "max_connections": 150,
+        "warning_threshold": 200,
+        "reserved_ports": [
+            8080,
+            3000,
+            5000
+        ]
+    },
+    "optimization": {
+        "auto_cleanup": true,
+        "backup_enabled": true,
+        "compression_enabled": true,
+        "monitor_interval": 5
+    }
+}

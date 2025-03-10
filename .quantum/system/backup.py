@@ -6,7 +6,7 @@ import shutil
 
 class QuantumBackup:
     def __init__(self):
-        self.timestamp = "2025-03-09 19:02:40"  # Current time
+        self.timestamp2025-03-10 06:20:56=2025-03-10 06:20:56"2025-03-092025-03-10 06:20:5619:02:40"  # Current time
         self.user = "artgalleryma2ta"
         self.base_path = Path(".quantum")
         self.backup_path = self.base_path / "backups"

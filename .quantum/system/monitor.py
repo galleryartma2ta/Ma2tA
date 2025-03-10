@@ -6,7 +6,7 @@ import time
 
 class QuantumMonitor:
     def __init__(self):
-        self.timestamp = "2025-03-09 19:00:33"  # Updated with current time
+        self.timestamp2025-03-10 06:20:56=2025-03-10 06:20:56"2025-03-092025-03-10 06:20:5619:00:33"  # Updated with current time
         self.user = "artgalleryma2ta"
         self.base_path = Path(".quantum")
         self.monitor_log = self.base_path / "logs" / "monitor.json"

@@ -1,0 +1,93 @@
+{
+    "metadata": {
+        "created_at": "2025-03-10 08:24:33",
+        "user": "artgalleryma2ta",
+        "version": "1.0"
+    },
+    "conversations": [
+        {
+            "timestamp": "2025-03-10 08:24:33",
+            "user": "artgalleryma2ta",
+            "message": "salam",
+            "type": "user"
+        },
+        {
+            "timestamp": "2025-03-10 08:24:33",
+            "user": "assistant",
+            "message": "پیام شما دریافت شد. در حال توسعه سیستم پاسخ‌دهی هستم...",
+            "type": "assistant"
+        },
+        {
+            "timestamp": "2025-03-10 08:27:41",
+            "user": "artgalleryma2ta",
+            "message": "سلام، چطوری؟",
+            "type": "user"
+        },
+        {
+            "timestamp": "2025-03-10 08:27:41",
+            "user": "assistant",
+            "message": "سلام! خوشحالم که می‌تونم کمکتون کنم",
+            "type": "assistant"
+        },
+        {
+            "timestamp": "2025-03-10 08:27:41",
+            "user": "artgalleryma2ta",
+            "message": "اسمت چیه؟",
+            "type": "user"
+        },
+        {
+            "timestamp": "2025-03-10 08:27:41",
+            "user": "assistant",
+            "message": "متوجه نشدم، می‌شه بیشتر توضیح بدید؟",
+            "type": "assistant"
+        },
+        {
+            "timestamp": "2025-03-10 08:27:41",
+            "user": "artgalleryma2ta",
+            "message": "اسم داری؟",
+            "type": "user"
+        },
+        {
+            "timestamp": "2025-03-10 08:27:41",
+            "user": "assistant",
+            "message": "متوجه نشدم، می‌شه بیشتر توضیح بدید؟",
+            "type": "assistant"
+        },
+        {
+            "timestamp": "2025-03-10 08:27:41",
+            "user": "artgalleryma2ta",
+            "message": "میتونی فایل های خودتو ارتقا بدی؟",
+            "type": "user"
+        },
+        {
+            "timestamp": "2025-03-10 08:27:41",
+            "user": "assistant",
+            "message": "متوجه نشدم، می‌شه بیشتر توضیح بدید؟",
+            "type": "assistant"
+        },
+        {
+            "timestamp": "2025-03-10 08:27:41",
+            "user": "artgalleryma2ta",
+            "message": "✨ چت شروع شد - پیام خود را بنویسید...  � شما: سلام، چطوری؟  � دستیار: سلام! خوشحالم که می‌تونم کمکتون کنم  � شما: اسمت چیه؟  � دستیار: متوجه نشدم، می‌شه بیشتر توضیح بدید؟  � شما: اسم داری؟  � دستیار: متوجه نشدم، می‌شه بیشتر توضیح بدید؟  � شما: میتونی فایل های خودتو ارتقا بدی؟  � دستیار: متوجه نشدم، می‌شه بیشتر توضیح بدید؟",
+            "type": "user"
+        },
+        {
+            "timestamp": "2025-03-10 08:27:41",
+            "user": "assistant",
+            "message": "سلام! خوشحالم که می‌تونم کمکتون کنم",
+            "type": "assistant"
+        },
+        {
+            "timestamp": "2025-03-10 08:27:41",
+            "user": "artgalleryma2ta",
+            "message": "چی بلدی؟",
+            "type": "user"
+        },
+        {
+            "timestamp": "2025-03-10 08:27:41",
+            "user": "assistant",
+            "message": "متوجه نشدم، می‌شه بیشتر توضیح بدید؟",
+            "type": "assistant"
+        }
+    ]
+}
